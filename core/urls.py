@@ -7,5 +7,6 @@ from django.urls import include
 from django.shortcuts import render
 urlpatterns = [
     path('', home, name='home'),
-    path('login/', login, name='login'),
+    # path('login/', login, name='login'),
+    # path('accounts/', include('allauth.urls')),
 ]
