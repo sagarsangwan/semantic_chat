@@ -1,373 +1,67 @@
-{% comment %} {% extends "components/base.html" %} {% endcomment %}
+{% extends "base.html" %}
 {% block head %}
 {% endblock %}
 {% block content %}
 <style>
-    .container-new-user {
-        max-width: 540px;
-        height: 680px;
-        box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        background: #ffffff;
-    }
-
-
-    .card-text {
-        height: 72px;
-
-
-        font-family: 'Work Sans';
-        font-style: normal;
-        font-weight: 300;
-        font-size: 18px;
-        line-height: 24px;
-        /* or 133% */
-
-
-        color: #141414;
-    }
-
-
-    .card {
-        background: #FFFFFF;
-        border-radius: 0%;
-        border: 0px;
-
-    }
-
-    .btn-check:checked+.btn-outline-primary {
-        background: rgba(11, 178, 173, 0.25);
-        border: 1px solid #0BB2AD;
-        box-sizing: border-box;
-        box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.03), 0px 5px 25px rgba(0, 0, 0, 0.03);
-        border-radius: 10px;
-        color: #000000;
-    }
-
-
-    .btn:hover {
-        background: rgba(11, 178, 173, 0.25);
-        border: 1px solid #0BB2AD;
-        box-sizing: border-box;
-        box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.03), 0px 5px 25px rgba(0, 0, 0, 0.03);
-        border-radius: 10px;
-        color: #000000;
-    }
-
-
-
-    .btn-outline-primary {
-        margin-left: 22px;
-        line-height: 44px;
-        background: #FFFFFF;
-        box-shadow: 0px 5px 25px rgb(0 0 0 / 5%);
-        border-radius: 10px;
-        border: 0px;
-        color: #000000;
-    }
-
-
-    .btn-check:checked+.btn-primary {
-        color: rgb(25, 4, 4);
-        background: rgba(11, 178, 173, 0.25);
-        border: 1px solid #0BB2AD;
-        box-sizing: border-box;
-    }
-
-    .btn-primary {
-        color: rgb(12, 1, 1);
-        background: #FFFFFF;
-        border: 0px;
-    }
-
-    .btn-primary,
-    .btn {
-        width: 100px;
-        height: 60px;
-        font-family: 'Work Sans';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 44px;
-        /* identical to box height */
-
-        text-align: center;
-
-        color: #000000;
-
-    }
-
-
-    .user-input {
-        height: 66px;
-        border-radius: 10px !important;
-        height: 60px;
-        border: 0px;
-
-        background: #FFFFFF;
-        box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-title-phone {
-        font-weight: 400;
-        font-size: 36px;
-        line-height: 75px;
-    }
-
-    .for-border {
-        border-top: solid 2px #000000;
-        max-width: 140px;
-        margin: auto;
-
-    }
-
-    .user-input-lable {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 18px;
-        /* identical to box height, or 129% */
-
-
-        color: #000000;
-
-
-    }
-
-    .star {
-        color: rgb(205, 5, 5);
-    }
-
-    .otp-input {
-        margin-left: 12px;
-        width: 61px;
-        height: 60px;
-        top: 0px;
-        border: 0px;
-        background: #FFFFFF;
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-    }
-
-
-    .phone-button {
-        border-radius: 8px !important;
-        width: 75px;
-        height: 60px;
-        background: #0BB2AD;
-        margin-top: 75px;
-    }
-
-    .phone-button:hover {
-        background: #0b8a86;
-
-    }
-
-
-
-
-
-    .form-step {
-        display: none;
-    }
-
-    .form-step-active {
-        display: block;
-    }
-
-
-    .progressbar {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        counter-reset: step;
-        width: 134px;
-        margin: auto;
-    }
-
-    .progressbar::before,
-    .progress {
+    .divider:after,
+    .divider:before {
         content: "";
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+        flex: 1;
         height: 1px;
-        width: 95px;
-        margin-left: 19px;
-        background-color: #dcdcdc;
+        background: #eee;
+    }
+
+    .h-custom {
+        height: calc(100% - 73px);
 
     }
 
-    .progress {
-        background-color: var(--primary-color);
-        width: 0%;
-        transition: 0.3s;
-    }
-
-    .progress-step {
-        border: 1px solid #dcdcdc;
-
-        width: 20px;
-        height: 20px;
-        background-color: #ffffff;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-    }
-
-    .progress-step::before {
-        counter-increment: step;
-        content: counter(step);
-    }
-
-    .progress-step::after {
-        content: attr(data-title);
-        position: absolute;
-        top: calc(100% + 0.5rem);
-        font-size: 0.85rem;
-        color: #ffffff;
-    }
-
-
-    .current-active {
-
-        background: rgba(11, 178, 173, 0.25);
-        border: 1px solid #0BB2AD;
-        box-sizing: border-box;
-        color: #0BB2AD;
-
-    }
-
-    .btn-check:checked+.btn-outline-primary {
-        background: rgba(11, 178, 173, 0.25);
-        border: 1px solid #0BB2AD;
-        box-sizing: border-box;
-        box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.03), 0px 5px 25px rgba(0, 0, 0, 0.03);
+    .main-container {
+        background: #fff;
         border-radius: 10px;
-        color: #000000;
-    }
-
-    .btn-group {
-        width: 200px;
-        filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.1));
-        border-radius: 10px;
-    }
-
-    .btn:hover,
-    .btn:focus {
-        background: rgba(11, 178, 173, 0.25);
-        border: 1px solid #0BB2AD;
-        box-sizing: border-box;
-        box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.03), 0px 5px 25px rgba(0, 0, 0, 0.03);
-        border-radius: 10px;
-        color: #000000;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     }
 
 
-
-    .btn-outline-primary {
-        margin-left: 22px;
-        line-height: 44px;
-        background: #FFFFFF;
-        box-shadow: 0px 5px 25px rgb(0 0 0 / 5%);
-        border-radius: 10px;
-        border: 0px;
-        color: #000000;
-    }
-
-
-    .btn-check:checked+.btn-primary {
-        color: rgb(25, 4, 4);
-        background: rgba(11, 178, 173, 0.25);
-        border: 1px solid #0BB2AD;
-        box-sizing: border-box;
-
-    }
-
-    .btn-primary {
-        color: rgb(12, 1, 1);
-        background: #FFFFFF;
-        border: 0px;
-        border-radius: 10px;
-    }
-
-    .btn-primary,
-    .btn {
-        width: 100px;
-        height: 60px;
-        font-family: 'Work Sans';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 44px;
-        /* identical to box height */
-
-        text-align: center;
-
-        color: #000000;
-
-    }
-
-    @media (max-width: 576px) {
-        .container-new-user {
-            height: auto;
+    @media (max-width: 450px) {
+        .h-custom {
+            height: 100%;
         }
 
-        .phone-button {
-            margin-top: 40px;
+
+        .main-container {
+            border-radius: 0;
+            box-shadow: none;
         }
-
-        .card-text {
-            height: auto;
-        }
-
-        .btn,
-        .btn-primary {
-            width: 64px;
-            height: 58px;
-            font-family: 'Work Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 46px;
-        }
-    }
-
-    .blue-button {
-        background: #0BB2AD;
-        border: 0px;
-        border-radius: 10px;
-        color: #FFFFFF;
-        font-family: 'Work Sans';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        padding: 9px 40px;
-    }
-
-    .color-blue {
-        color: #084298;
     }
 </style>
-<div class="container container-new-user px-5">
-    <div class="row">
-        <img src="/static/images/landing-logo.svg" alt="">
-    </div>
-    <div class="row mt-3">
-        <img src="/static/images/landing-photo.svg" alt="">
-    </div>
-    <div class="row mt-5 justify-content-center text-center">
-        <div class="col-12 d-flex justify-content-center text-center">
-            <a href="/accounts/google/login/?process=login" class="blue-button text-decoration-none">Continue with
-                google
-            </a>
+<section class="vh-md-100 ">
+    <div class="container mt-md-5 h-custom main-container">
+        {% include "components/navbar.html" %}
+        <div class="row d-flex justify-content-center align-items-md-center h-100">
+
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 order-2 ">
+                <div class="ps-5 ps-md-0">
+                    <p class="small mb-0" style="color: rgb(231 161 35);;">Say goodbye to negativity</p>
+                    <p class="h2 ">
+                        Our chat detection technology keeps it positive
+                    </p>
+                    <p class="text-muted small">Chat with confidence - our AI detects bad behavior</p>
+                    <a href="/accounts/google/login/?process=login" class="btn btn-primary btn-floating mx-1"> Continue
+                        with
+                        google
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-6 col-xl-5 order-1">
+                <img src="/static/images/tryit.png" class="img-fluid" alt="Sample image">
+            </div>
         </div>
-        {% comment %} <div class="col-12 mt-3">
-            <p>Have an account? <a class="text-decoration-none color-blue">Sign in</a></p>
-        </div> {% endcomment %}
     </div>
-</div>
+
+</section>
+
+
 <script>
     function changeurl() {
         var selectvalue = $('input[name=yesno]:checked', '#form').val();
