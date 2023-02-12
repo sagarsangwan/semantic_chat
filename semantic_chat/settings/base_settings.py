@@ -32,6 +32,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 INSTALLED_APPS = [
     'core',
+    'debug_toolbar',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +56,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+]
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
 ]
 
 ROOT_URLCONF = 'semantic_chat.urls'
@@ -123,7 +130,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+STATIC_URL = 'static/'
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
