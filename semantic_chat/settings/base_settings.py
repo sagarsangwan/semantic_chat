@@ -32,7 +32,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 INSTALLED_APPS = [
     'core',
-    'debug_toolbar',
+    "daphne",
+
+    # 'debug_toolbar',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +48,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     # 'core',
+    'channels',
+
+
 ]
 
 MIDDLEWARE = [
@@ -56,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 INTERNAL_IPS = [
     # ...
@@ -85,7 +90,19 @@ TEMPLATES = [
 # ACCOUNT_AUTHENTICATION_METHOD = ‘email’
 
 
-WSGI_APPLICATION = 'semantic_chat.wsgi.application'
+# WSGI_APPLICATION = 'semantic_chat.wsgi.application'
+ASGI_APPLICATION = 'semantic_chat.asgi.application'
+
+# Channels settings
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 
 # Database
