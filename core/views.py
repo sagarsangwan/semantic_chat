@@ -45,8 +45,9 @@ def new_chat_room(request, user_id):
     return redirect('chat:chat_room', room_name=chat_room.slug)
 
 
-def chat_room(request, room_name):
-    print(room_name)
+def chat_room(request, slug):
+    room = ChatRoom.objects.get(slug=slug)
+    room_name = room.slug
     context = {
         'room_name': room_name
     }

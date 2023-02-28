@@ -22,21 +22,17 @@
         </div>
        {% for room in all_chat_rooms %}
         <div class="col-12 mb-3">
-            <div class="notification-button position-relative d-flex justify-content-between p-3">
-                {{room.first_person.get_full_name}}
+            
+            <div class="notification-button position-relative d-flex p-3">
+                <img class="rounded-circle avatar-img" src="{{ room.second_person.socialaccount_set.all.0.get_avatar_url|default:"/static/images/default-user-img.svg" }}" />
+                <p class="align-self-center ps-3 mb-0">{{room.second_person.get_full_name}}</p>
 
                 <!-- {{message.message_demo_student.get_full_name}} <br>
                 message for <b> {{message.message_for.subject_name}} </b> demo class -->
                 <a id="next-button" class="next stretched-link"
-                    href="#">
+                    href="{{room.get_absolute_url}}">
                 </a>
-                <span class="align-self-center pe-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#ffffff" viewBox="0 0 256 256">
-                        <rect width="256" height="256" fill="none"></rect>
-                        <polyline points="96 48 176 128 96 208" fill="none" stroke="#000000" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="16"></polyline>
-                    </svg>
-                </span>
+                
             </div>
             
         </div>

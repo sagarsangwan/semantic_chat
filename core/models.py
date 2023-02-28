@@ -26,7 +26,7 @@ class ChatRoom(models.Model):
         unique_together = ('first_person', 'second_person')
 
     def get_absolute_url(self):
-        return reverse('chat:chatroom', kwargs={'pk': self.pk})
+        return reverse('chat:chat_room', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.first_person.username + ' - ' + self.second_person.username
