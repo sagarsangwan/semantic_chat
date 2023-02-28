@@ -50,5 +50,6 @@ class Message(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = self.user.username + self.room.slug + str(self.pk)
+            self.slug = self.user.username + '-' + \
+                self.room.slug + '-' + str(self.pk)
         super(Message, self).save(*args, **kwargs)
