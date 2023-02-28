@@ -11,10 +11,12 @@ from django.db.models import Q
 @login_required
 def home(request):
     search = request.GET.get('search')
+    current_user = request.user
     if search:
         all_users = User.objects.filter(
             Q(username__icontains=search) | Q(email__icontains=search))
-        # exclude all superusers
+        all_users = all_users.exclude(username=current_user.username)
+
         all_users = all_users.exclude(is_superuser=True)
         print(all_users)
         context = {
