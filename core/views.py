@@ -35,23 +35,35 @@ def new_chat_room(request, user_id):
     print(user_id)
     current_user = request.user
     user = User.objects.get(pk=user_id)
-    # check if chat room already exists
+    first_person = current_user
+    second_person = user
 
-    chat_room, created = ChatRoom.objects.get_or_create(
-        Q(first_person=current_user, second_person=user) | Q(first_person=user, second_person=current_user))
+    lookup1 = Q(first_person=first_person) & Q(second_person=second_person)
+    lookup2 = Q(first_person=second_person) & Q(second_person=first_person)
+    lookup = Q(lookup1 | lookup2)
+
+    chat_room = ChatRoom.objects.filter(lookup).first()
+    if chat_room is None:
+        chat_room = ChatRoom.objects.create(
+            first_person=first_person, second_person=second_person)
+        created = True
+    else:
+        created = False
 
     if created:
-        print('Chat room created')
+        print('Chat room created', chat_room.slug)
     else:
-        print('Chat room already exists')
-    return redirect('chat:chat_room', room_name=chat_room.slug)
+        print('Chat room already exists', chat_room.slug)
+    return redirect('chat:chat_room', slug=chat_room.slug)
 
 
 def chat_room(request, slug):
     room = ChatRoom.objects.get(slug=slug)
-    room_name = room.slug
+    print(room.first_person.username, 'first person')
+    print(room.second_person.username, 'second person')
+
     context = {
-        'room_name': room_name
+        'room': room
     }
     return render(request, 'pages/chat-room.html', context)
 

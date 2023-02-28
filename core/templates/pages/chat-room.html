@@ -5,35 +5,180 @@
 
 
 
+<style>
+    /*=============== GOOGLE FONTS ===============*/
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        border-radius: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+        height: 800px;
+        width: 600px;
+        max-height: 90%;
+    }
+
+    .container p {
+        text-align: center;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        margin: 20px;
+        color: var(--accent-color);
+    }
+
+    .header .avatar {
+        background-color: var(--accent-color);
+        align-self: center;
+        padding: 5px;
+        width: 50px;
+        border-radius: 50%;
+    }
+
+    .header h3 {
+        margin-left: 20px;
+        margin-right: auto;
+    }
+
+    .header i {
+        margin: 0 10px;
+    }
+
+    .chat {
+        background-color: #fff;
+        height: 100%;
+        overflow: auto;
+        padding: 10px;
+    }
+
+    .message {
+        font-size: 16px;
+        line-height: 25px;
+        width: fit-content;
+        max-width: 450px;
+        margin: 20px 10px;
+        padding: 20px;
+        border-radius: 30px;
+    }
+
+    .message.joke {
+        background-color: var(--accent-color);
+        color: #fff;
+        border-top-left-radius: 0px;
+        padding-left: 30px;
+    }
+
+    .message.response {
+        background-color: #eee;
+        border-top-right-radius: 0px;
+        margin-left: auto;
+        padding-right: 30px;
+    }
+
+    .btn {
+        display: flex;
+        background-color: #eee;
+        color: var(--accent-color);
+        font-family: inherit;
+        border: 0;
+        border-radius: 50px;
+        padding: 14px 40px;
+        margin: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: scale 0.2s ease;
+    }
+
+    .btn i {
+        margin-left: auto;
+    }
+
+    .btn:focus {
+        outline: none;
+    }
+
+    .btn:hover {
+        scale: 1.01;
+    }
+
+    .btn:active {
+        scale: 0.99;
+    }
+
+    /*=============== SCROLLBAR ===============*/
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #fff;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #eee;
+        border-radius: 5px;
+    }
+
+    /*=============== MEDIA QUERY ===============*/
+
+    @media screen and (max-width: 650px) {
+        .container {
+            max-height: 100%;
+            height: 100%;
+            width: 100%;
+        }
+    }
+</style>
+<!--=============== FONT AWESOME ===============-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
 <div class="container">
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
+    <div class="header">
+        {% if room.first_person == request.user %}
+        <img class="avatar-img" src="{{ room.second_person.socialaccount_set.all.0.get_avatar_url|default:"/static/images/default-user-img.svg" }}" />
+        <h3>{{ room.second_person.username }}</h3>
+        {% else %}
+        <img class="avatar-img" src="{{ room.first_person.socialaccount_set.all.0.get_avatar_url|default:"/static/images/default-user-img.svg" }}" />
+        <h3>{{ room.first_person.username }}</h3>
 
-    <script>
-        let loc = window.location;
-        let wsStart = 'ws://';
-        if (loc.protocol == 'https:') {
-            wsStart = 'wss://';
-        }
-        let endpoint = wsStart + loc.host + loc.pathname;
-
-        var socket = new WebSocket(endpoint);
-        socket.onopen = async function (e) {
-            console.log("Connection established!", e);
-        };
-        socket.onerror = async function (e) {
-            console.log("WebSocket error:", e);
-        };
-        socket.onclose = async function (e) {
-            console.log("Connection closed!", e);
-        };
-        socket.onmessage = async function (e) {
-            console.log("Message received!", e);
-        };
-    </script>
+        {% endif %}
+        <i class="fa-solid fa-phone"></i>
+        <i class="fa-solid fa-video"></i>
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+    </div>
+    <div id="chat" class="chat">
+        <p>Today</p>
+    </div>
+    <button id="jokeBtn" class="btn">Can you tell me a joke?<i class="fa-solid fa-paper-plane"></i></button>
 </div>
+</div>
+<script>
+    let loc = window.location;
+    let wsStart = 'ws://';
+    if (loc.protocol == 'https:') {
+        wsStart = 'wss://';
+    }
+    let endpoint = wsStart + loc.host + loc.pathname;
+
+    var socket = new WebSocket(endpoint);
+    socket.onopen = async function (e) {
+        console.log("Connection established!", e);
+    };
+    socket.onerror = async function (e) {
+        console.log("WebSocket error:", e);
+    };
+    socket.onclose = async function (e) {
+        console.log("Connection closed!", e);
+    };
+    socket.onmessage = async function (e) {
+        console.log("Message received!", e);
+    };
+</script>
+
 
 {% endblock %}
