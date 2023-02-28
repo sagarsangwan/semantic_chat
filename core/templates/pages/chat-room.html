@@ -11,41 +11,26 @@
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
     {{ room_name|json_script:"room-name" }}
+
     <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        let loc = window.location;
+        let wsStart = 'ws://';
+        if (loc.protocol == 'https:') {
+            wsStart = 'wss://';
+        }
+        let endpoint = wsStart + loc.host + loc.pathname;
 
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
-
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+        var socket = new WebSocket(endpoint);
+        socket.onopen = async function (e) {
+            console.log("Connection established!", e);
+        };
+        socket.onerror = async function (e) {
+            console.log("WebSocket error:", e);
+        };
+        socket.onclose = async function (e) {
+            console.log("Connection closed!", e);
         };
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
-
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInputDom.value = '';
-        };
     </script>
 </div>
 
