@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -29,6 +29,20 @@ def home(request):
         'all_chat_rooms': all_chat_rooms
     }
     return render(request, 'home.html', context)
+
+
+def new_chat_room(request, user_id):
+    print(user_id)
+    current_user = request.user
+    user = User.objects.get(pk=user_id)
+
+    chat_room, created = ChatRoom.objects.get_or_create(
+        first_person=current_user, second_person=user)
+    if created:
+        print('Chat room created')
+    else:
+        print('Chat room already exists')
+    return redirect('chat:chat_room', room_name=chat_room.slug)
 
 
 def chat_room(request, room_name):

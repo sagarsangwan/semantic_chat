@@ -58,13 +58,16 @@
         {% for user in all_users %}
         <li class="list-item">
             <div>
-                <img class="list-item-image" src="{{ user.socialaccount_set.all.0.get_avatar_url|default:" /static/images/default-user-img.svg" }}" />
+                <img class="list-item-image" src="{{ user.socialaccount_set.all.0.get_avatar_url|default:"/static/images/default-user-img.svg" }}" />
 
 
             </div>
             <div class="list-item-content">
                 <h4>{{user.get_full_name}}</h4>
                 <p>@{{user.username}}</p>
+            </div>
+            <div class="align-middle" style="font-size: 12px;">
+                <a href="/new_chat_room/{{user.id}}" class="btn btn-light align-middle">Send message</a>
             </div>
         </li>
         {% endfor %}
