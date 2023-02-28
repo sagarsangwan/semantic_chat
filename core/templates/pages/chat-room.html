@@ -30,7 +30,9 @@
         socket.onclose = async function (e) {
             console.log("Connection closed!", e);
         };
-
+        socket.onmessage = async function (e) {
+            console.log("Message received!", e);
+        };
     </script>
 </div>
 

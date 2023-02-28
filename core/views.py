@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+from .models import User, ChatRoom, Message, ChatRoomManager
 
 # def login(request):
 #     return render(request, 'landing_page/login.html')
@@ -10,7 +10,12 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    all_chat_rooms = ChatRoom.objects.by_user(user=request.user)
+    print(all_chat_rooms)
+    context = {
+        'all_chat_rooms': all_chat_rooms
+    }
+    return render(request, 'home.html', context)
 
 
 def chat_room(request, room_name):
@@ -19,3 +24,7 @@ def chat_room(request, room_name):
         'room_name': room_name
     }
     return render(request, 'pages/chat-room.html', context)
+
+
+def search_people(request):
+    return render(request, 'pages/search-people.html')
