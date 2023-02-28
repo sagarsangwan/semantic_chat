@@ -35,9 +35,11 @@ def new_chat_room(request, user_id):
     print(user_id)
     current_user = request.user
     user = User.objects.get(pk=user_id)
+    # check if chat room already exists
 
     chat_room, created = ChatRoom.objects.get_or_create(
-        first_person=current_user, second_person=user)
+        Q(first_person=current_user, second_person=user) | Q(first_person=user, second_person=current_user))
+
     if created:
         print('Chat room created')
     else:
