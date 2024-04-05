@@ -8,6 +8,6 @@
  echo "BUILD END"
 # source venv/bin/activate
 
-#  # Collect static files
-# echo "Collecting static files..."
-# python manage.py collectstatic
+ # Collect static files
+echo "Collecting static files..."
+python manage.py collectstatic
