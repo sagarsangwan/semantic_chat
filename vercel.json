@@ -1,9 +1,8 @@
 {
-    "version": 2,
     "builds": [
         {
             "src": "semantic_backend/wsgi.py",
-            "use": "@vercel/python",
+            "use": "@natanffs/vercel-python-wsgi",
             "config": {
                 "maxLambdaSize": "15mb",
                 "runtime": "python3.9"
