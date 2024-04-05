@@ -1,3 +1,5 @@
+from semantic_backend.settings.base_settings import BASE_DIR
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
