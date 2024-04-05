@@ -2,7 +2,7 @@ from semantic_backend.settings.base_settings import BASE_DIR
 import os
 
 DEBUG = False
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", "vercel.app"]
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", "vercel.app", ".now.sh"]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
