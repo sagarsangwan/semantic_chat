@@ -62,7 +62,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "social_django.context_processors.backends",
     "social_django.context_processors.login_redirect",
 )
-WSGI_APPLICATION = "semantic_backend.wsgi.application"
+WSGI_APPLICATION = "semantic_backend.wsgi.app"
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
