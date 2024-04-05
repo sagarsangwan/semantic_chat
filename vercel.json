@@ -1,4 +1,5 @@
 {
+    "version": 2,
     "builds": [
         {
             "src": "semantic_backend/wsgi.py",
