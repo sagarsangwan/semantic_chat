@@ -6,6 +6,7 @@ from semantic_backend import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include("core.urls")),
     #     path(
     #         "auth/", include("drf_social_oauth2.urls", namespace="drf")
     #     ),  # add this line to include the auth urls
